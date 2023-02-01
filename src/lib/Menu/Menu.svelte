@@ -5,6 +5,12 @@
 
 	$: tags = spec.tags ?? [];
 
+	const getActiveTag = () => {
+		return window.location.hash.split('/')[1];
+	};
+
+	let activeTag = getActiveTag();
+
 	const getPathsForTag = (tag: string) => {
 		const tagEndpoints: Array<OperationObject> = [];
 		if (spec && spec.paths) {
@@ -20,18 +26,31 @@
 				if (path.put?.tags?.find((t) => t === tag)) tagEndpoints.push(path.put as OperationObject);
 				if (path.delete?.tags?.find((t) => t === tag))
 					tagEndpoints.push(path.delete as OperationObject);
+				if (path.options?.tags?.find((t) => t === tag))
+					tagEndpoints.push(path.options as OperationObject);
+				if (path.head?.tags?.find((t) => t === tag))
+					tagEndpoints.push(path.head as OperationObject);
 			}
 		}
-		console.log(tagEndpoints);
+
 		return tagEndpoints;
 	};
 </script>
 
-<div id="menu" class="w-full sm:w-72 h-screen bg-slate-100">
+<svelte:window
+	on:hashchange={() => {
+		console.log(window.location.hash);
+		if (window.location.hash.startsWith('#tag')) {
+			activeTag = getActiveTag();
+		}
+	}}
+/>
+
+<div id="menu" class="w-full sm:w-72 h-screen bg-base-300 text-base-">
 	{#each tags as tag}
 		<div class="collapse collapse-arrow">
-			<input type="checkbox" class="peer" />
-			<div class="collapse-title peer-checked:bg-slate-200">
+			<input type="checkbox" class="peer" checked={activeTag === tag.name} />
+			<div class="collapse-title peer-checked:bg-base-200">
 				{tag.name}
 			</div>
 
