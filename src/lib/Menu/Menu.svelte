@@ -46,23 +46,21 @@
 	}}
 />
 
-<div id="menu" class="w-full sm:w-72 h-screen bg-base-300 text-base-">
-	{#each tags as tag}
-		<div class="collapse collapse-arrow">
-			<input type="checkbox" class="peer" checked={activeTag === tag.name} />
-			<div class="collapse-title peer-checked:bg-base-200">
-				{tag.name}
-			</div>
-
-			<div class="collapse-content ">
-				{#each getPathsForTag(tag.name) as tagEndpoint}
-					<a href={`#tag/${tag.name}/${tagEndpoint.operationId}`}
-						><div class="py-2">
-							<span> {tagEndpoint.summary}</span>
-						</div></a
-					>
-				{/each}
-			</div>
+{#each tags as tag}
+	<div class="collapse collapse-arrow">
+		<input type="checkbox" class="peer" checked={activeTag === tag.name} />
+		<div class="collapse-title peer-checked:bg-base-200">
+			{tag.name}
 		</div>
-	{/each}
-</div>
+
+		<div class="collapse-content ">
+			{#each getPathsForTag(tag.name) as tagEndpoint}
+				<a href={`#tag/${tag.name}/${tagEndpoint.operationId}`}
+					><div class="py-2">
+						<span> {tagEndpoint.summary}</span>
+					</div></a
+				>
+			{/each}
+		</div>
+	</div>
+{/each}
