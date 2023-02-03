@@ -2,16 +2,17 @@
 	import type { OpenAPI } from 'openapi-types';
 	import Content from './Content/Content.svelte';
 	import Menu from './Menu/Menu.svelte';
+	import { getTagsWithPathes } from './utils/specTransformer';
 	export let spec: OpenAPI.Document<{}>;
 
 	let showMenu = false;
+
+	$: tagsWithEndpoints = getTagsWithPathes(spec) 
 </script>
 
 <div id="openapi" class="drawer drawer-mobile">
 	<input id="my-drawer-3" type="checkbox" class="drawer-toggle" bind:checked={showMenu} />
 	<div class="drawer-content flex flex-col">
-		<!-- Navbar -->
-
 		<button
 			class="btn btn-circle lg:hidden  absolute bottom-4 left-4 z-10"
 			on:click={() => {
@@ -32,13 +33,13 @@
 			>
 		</button>
 
-		<Content {spec} />
+		<Content {spec} {tagsWithEndpoints}/>
 	</div>
 	<div class="drawer-side">
 		<label for="my-drawer-3" class="drawer-overlay" />
 		<div class="menu w-80 bg-base-300">
 			<!-- Sidebar content here -->
-			<Menu {spec} />
+			<Menu {spec} {tagsWithEndpoints}/>
 		</div>
 	</div>
 </div>

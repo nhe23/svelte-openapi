@@ -10,7 +10,7 @@
 </script>
 
 <div class="w-full flex flex-wrap">
-	<div class="w-full md:w-3/5 ">
+	<div class="w-full md:w-3/5 p-8">
 		<slot name="left" />
 	</div>
 	<div class="flex-1 text-white bg-slate-800">
